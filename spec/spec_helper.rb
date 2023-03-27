@@ -2,9 +2,11 @@ require 'selenium-webdriver'
 require 'capybara/rspec'
 require 'require_all'
 require 'site_prism'
+require 'dotenv/load'
 
 require_all 'page_objects/sections'
 require_all 'page_objects/pages'
+require_all 'modules'
 
 
 RSpec.configure do |config|
