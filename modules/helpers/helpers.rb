@@ -8,7 +8,7 @@ module Helpers
     @login_page.password_field.set password
     @login_page.submit_button.click
   end
-  
+
   def register_user(user)
     @register_page = RegisterPage.new
     @register_page.load
