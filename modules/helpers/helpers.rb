@@ -1,6 +1,8 @@
-module Helpers
+# frozen_string_literal: true
 
-  def login_user(login,password)
+# This module describes repeatable action
+module Helpers
+  def login_user(login, password)
     @login_page = LoginPage.new
     @login_page.load
 
@@ -10,23 +12,22 @@ module Helpers
   end
 
   def register_user(user)
-    @register_page = RegisterPage.new
-    @register_page.load
+    visit 'https://gitlab.testautomate.me/'
 
-    @register_page.first_name_field.set user.firstname
-    @register_page.last_name_field.set user.lastname
-    @register_page.username_field.set user.username
-
+    find('[data-qa-selector="register_link"]').click
+    find('#new_user_first_name').set user.firstname
+    find('#new_user_last_name').set user.lastname
+    find('#new_user_username').set user.username
     expect(page).to have_selector '.validation-success.field-validation'
 
-    @register_page.email_field.set user.email
-    @register_page.password_field.set user.password
-    @register_page.register_button.click
+    find('#new_user_email').set user.email
+    find('#new_user_password').set user.password
+    find('.btn-confirm').click
+    select('Software Developer', from: 'Role')
+    select('A different reason', from: "I'm signing up for GitLab because:")
 
-    @register_page.role_field.select('Software Developer')
-    @register_page.registration_objective_field.select('I want to store my code')
-    @register_page.different_reason_field.set 'Whatever reason' if @register_page.has_different_reason_field?(visible: true)
-    @register_page.get_started_button.click
+    find('#jobs_to_be_done_other').set 'Whatever reason' if find('#jobs_to_be_done_other', visible: false).visible?
+
+    find('[data-qa-selector="get_started_button"]').click
   end
-
 end
