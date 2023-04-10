@@ -3,6 +3,7 @@
 require 'capybara/rspec'
 require 'dotenv/load'
 require 'selenium-webdriver'
+require 'rest-client'
 require 'require_all'
 require 'site_prism'
 
@@ -11,6 +12,7 @@ require_all 'page_objects/pages'
 require_all 'modules'
 
 include Helpers
+include ApiWrappers
 
 RSpec.configure do
   def chrome_options
